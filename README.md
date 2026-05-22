@@ -16,6 +16,69 @@ To write a PYTHON program for socket for HTTP for web page upload and download
 6.Stop the program
 <BR>
 ## Program 
-## OUTPUT
+## OUTPUTSERVER:
+
+
+import socket
+from pythonping import ping
+
+s = socket.socket()
+
+s.bind(('localhost', 8000))
+s.listen(5)
+
+print("Server waiting for connection...")
+
+c, addr = s.accept()
+print("Connected to:", addr)
+
+while True:
+    hostname = c.recv(1024).decode()
+
+ if not hostname:
+        break
+    try:
+        result = ping(hostname, verbose=False)
+        c.send(str(result).encode())
+    except Exception:
+        c.send("Not Found".encode())
+
+c.close()
+s.close()
+
+CLIENT:
+
+
+import socket
+
+s = socket.socket()
+
+s.connect(('localhost', 8000))
+
+while True:
+    ip = input("Enter the website you want to ping: ")
+
+ s.send(ip.encode())
+    response = s.recv(1024).decode()
+    print(response)
+
+import socket
+
+s = socket.socket()
+
+s.connect(('localhost', 8000))
+
+while True:
+    ip = input("Enter the website you want to ping: ")
+    s.send(ip.encode())
+  response = s.recv(1024).decode()
+
+ print(response)
+ ## output 
+ ## client
+          <img width="773" height="351" alt="Screenshot 2026-05-22 141309" src="https://github.com/user-attachments/assets/b92eba0b-59ae-4da1-86c9-c12a0fae578d" />
+## server
+         <img width="715" height="354" alt="Screenshot 2026-05-22 141325" src="https://github.com/user-attachments/assets/007f8770-306e-45a6-9fea-5413f18dd4f4" />
+
 ## Result
 Thus the socket for HTTP for web page upload and download created and Executed
